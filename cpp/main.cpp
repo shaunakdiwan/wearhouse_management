@@ -15,11 +15,12 @@ void displayMenu() {
     cout << "3. Search Part in Inventory\n";
     cout << "4. Display Inventory\n";
     cout << "5. Place Order\n";
-    cout << "6. Process Next Order (Not integrated yet)\n";
-    cout << "7. Undo Last Order (Not integrated yet)\n";
+    cout << "6. Process Next Order\n";
+    cout << "7. Undo Last Order\n";
     cout << "8. Display Order Queue\n";
     cout << "9. Display Order History\n";
-    cout << "10. Exit\n";
+    cout << "10. Display Robot Route\n";
+    cout << "11. Exit\n";
     cout << "Enter your choice: ";
 }
 
@@ -82,22 +83,54 @@ int main() {
                 break;
             }
             case 6: {
-                // Test dequeue alone for Part 1
+                // INTEGRATION LOGIC: Process Next Order
+                if (isEmpty()) {
+                    cout << "Queue Underflow: No orders to process\n";
+                    break;
+                }
+
                 Order o = dequeueOrder();
-                if (o.orderId != -1) {
-                    cout << "Dequeued Order ID: " << o.orderId << "\n";
-                    // Manually test pushing to stack for Part 1 basic testing
+                cout << "Processing Order ID: " << o.orderId << "\n";
+                
+                // Search Linked List
+                Node* part = searchPart(o.partId);
+                if (part == nullptr) {
+                    cout << "Error: Part ID " << o.partId << " not found in inventory. Order failed.\n";
+                } else if (part->quantity < o.qtyRequested) {
+                    cout << "Error: Insufficient stock for Part ID " << o.partId << ". Order failed.\n";
+                } else {
+                    // Reduce quantity
+                    part->quantity -= o.qtyRequested;
+                    cout << "Order fulfilled! Stock updated.\n";
+                    
+                    // Push to history stack
                     Action a = {o.orderId, o.partId, o.qtyRequested};
                     pushAction(a);
-                    cout << "Pushed to history stack.\n";
+                    
+                    // Add Robot Waypoints
+                    string waypoint = "Shelf-" + to_string(o.partId);
+                    addWaypoint(waypoint);
+                    cout << "Added task to Robot Route: Visit " << waypoint << "\n";
                 }
                 break;
             }
             case 7: {
-                // Test pop alone for Part 1
+                // INTEGRATION LOGIC: Undo Last Order
+                if (isStackEmpty()) {
+                    cout << "Stack Underflow: No action to undo\n";
+                    break;
+                }
+                
                 Action a = popAction();
-                if (a.orderId != -1) {
-                    cout << "Popped Order ID: " << a.orderId << " from history.\n";
+                cout << "Undoing Order ID: " << a.orderId << "\n";
+                
+                // Restore quantity in Linked List
+                Node* part = searchPart(a.partId);
+                if (part != nullptr) {
+                    part->quantity += a.qtyFulfilled;
+                    cout << "Restored " << a.qtyFulfilled << " items of Part ID " << a.partId << " to inventory.\n";
+                } else {
+                    cout << "Error: Part ID " << a.partId << " no longer in inventory. Cannot restore stock.\n";
                 }
                 break;
             }
@@ -108,12 +141,15 @@ int main() {
                 displayStack();
                 break;
             case 10:
+                displayRoute();
+                break;
+            case 11:
                 cout << "Exiting...\n";
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
         }
-    } while (choice != 10);
+    } while (choice != 11);
 
     return 0;
 }

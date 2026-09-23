@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>Warehouse Inventory and Order Management</h1>
-        <p>Part 1: UI Skeleton</p>
+        <p>Part 2: Full Integration Simulation</p>
     </header>
 
     <main>
@@ -19,10 +19,13 @@
                 <input type="number" id="part-id" placeholder="Part ID">
                 <input type="text" id="part-name" placeholder="Part Name">
                 <input type="number" id="part-qty" placeholder="Quantity">
-                <button onclick="alert('Not implemented in Part 1')">Add Part</button>
+                <input type="number" id="part-price" placeholder="Price">
+                <button onclick="uiAddPart()">Add Part</button>
+                <input type="number" id="del-part-id" placeholder="Part ID to delete" style="width:120px; margin-left:10px;">
+                <button onclick="uiDeletePart()">Delete Part</button>
             </div>
             <div id="inventory-list" class="data-container">
-                <p>Inventory is empty.</p>
+                <!-- JS will populate this -->
             </div>
         </section>
 
@@ -32,25 +35,36 @@
                 <input type="number" id="order-id" placeholder="Order ID">
                 <input type="number" id="order-part-id" placeholder="Part ID">
                 <input type="number" id="order-qty" placeholder="Quantity">
-                <button onclick="alert('Not implemented in Part 1')">Place Order</button>
-                <button onclick="alert('Not implemented in Part 1')">Process Next Order</button>
+                <button onclick="uiPlaceOrder()">Place Order</button>
+                <button onclick="uiProcessOrder()" style="margin-left:10px;">Process Next Order</button>
             </div>
             <div id="order-queue" class="data-container">
-                <p>Order queue is empty.</p>
+                <!-- JS will populate this -->
             </div>
         </section>
 
         <section id="history-section">
             <h2>Order History (Stack)</h2>
             <div class="controls">
-                <button onclick="alert('Not implemented in Part 1')">Undo Last Order</button>
+                <button onclick="uiUndoOrder()">Undo Last Order</button>
             </div>
             <div id="history-stack" class="data-container">
-                <p>History stack is empty.</p>
+                <!-- JS will populate this -->
+            </div>
+        </section>
+
+        <section id="robot-section">
+            <h2>Robot Route (Queue)</h2>
+            <div class="controls">
+                <button onclick="uiDequeueRobot()">Robot Reached Waypoint</button>
+            </div>
+            <div id="robot-queue" class="data-container">
+                <!-- JS will populate this -->
             </div>
         </section>
     </main>
 
+    <!-- JS explicitly separated to mirror C++ logic -->
     <script src="script.js"></script>
 </body>
 </html>
