@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Inventory and Order Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Warehouse Inventory and Order Management</h1>
+        <p>Part 1: UI Skeleton</p>
+    </header>
+
+    <main>
+        <section id="inventory-section">
+            <h2>Parts Inventory (Linked List)</h2>
+            <div class="controls">
+                <input type="number" id="part-id" placeholder="Part ID">
+                <input type="text" id="part-name" placeholder="Part Name">
+                <input type="number" id="part-qty" placeholder="Quantity">
+                <button onclick="alert('Not implemented in Part 1')">Add Part</button>
+            </div>
+            <div id="inventory-list" class="data-container">
+                <p>Inventory is empty.</p>
+            </div>
+        </section>
+
+        <section id="orders-section">
+            <h2>Order Processing (Queue)</h2>
+            <div class="controls">
+                <input type="number" id="order-id" placeholder="Order ID">
+                <input type="number" id="order-part-id" placeholder="Part ID">
+                <input type="number" id="order-qty" placeholder="Quantity">
+                <button onclick="alert('Not implemented in Part 1')">Place Order</button>
+                <button onclick="alert('Not implemented in Part 1')">Process Next Order</button>
+            </div>
+            <div id="order-queue" class="data-container">
+                <p>Order queue is empty.</p>
+            </div>
+        </section>
+
+        <section id="history-section">
+            <h2>Order History (Stack)</h2>
+            <div class="controls">
+                <button onclick="alert('Not implemented in Part 1')">Undo Last Order</button>
+            </div>
+            <div id="history-stack" class="data-container">
+                <p>History stack is empty.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
