@@ -19,8 +19,7 @@ void displayMenu() {
     cout << "7. Undo Last Order\n";
     cout << "8. Display Order Queue\n";
     cout << "9. Display Order History\n";
-    cout << "10. Display Robot Route\n";
-    cout << "11. Exit\n";
+    cout << "10. Exit\n";
     cout << "Enter your choice: ";
 }
 
@@ -106,11 +105,6 @@ int main() {
                     // Push to history stack
                     Action a = {o.orderId, o.partId, o.qtyRequested};
                     pushAction(a);
-                    
-                    // Add Robot Waypoints
-                    string waypoint = "Shelf-" + to_string(o.partId);
-                    addWaypoint(waypoint);
-                    cout << "Added task to Robot Route: Visit " << waypoint << "\n";
                 }
                 break;
             }
@@ -141,15 +135,12 @@ int main() {
                 displayStack();
                 break;
             case 10:
-                displayRoute();
-                break;
-            case 11:
                 cout << "Exiting...\n";
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
         }
-    } while (choice != 11);
+    } while (choice != 10);
 
     return 0;
 }

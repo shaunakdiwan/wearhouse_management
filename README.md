@@ -15,7 +15,6 @@ The final version (Part 2) integrates these structures together into a cohesive 
 - Placing an order places it in the Order Queue.
 - Processing an order checks the inventory linked list, deducts stock, pushes the fulfillment record onto the Order History Stack, and adds a waypoint to the Robot Route Queue.
 - Undoing an order pops the latest fulfillment from the Stack and restores the stock to the inventory linked list.
-- **Robot Route Queue**: A second queue is used to direct the automated picker robot to shelves.
 
 ### Compiling and Running C++ Version
 Ensure you have `g++` installed. From the `cpp` directory, run:

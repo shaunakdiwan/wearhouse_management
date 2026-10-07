@@ -128,46 +128,7 @@ function popAction() {
     return temp;
 }
 
-// ==========================================
-// 4. ROBOT TASK QUEUE (Robot Route)
-// ==========================================
-let robotQueue = new Array(MAX_SIZE);
-let robotFront = -1;
-let robotRear = -1;
 
-function isRobotQueueFull() {
-    return (robotRear === MAX_SIZE - 1);
-}
-
-function isRobotQueueEmpty() {
-    return (robotFront === -1 || robotFront > robotRear);
-}
-
-function addWaypoint(waypoint) {
-    if (isRobotQueueFull()) {
-        alert("Robot Queue Overflow: Cannot add more waypoints.");
-        return;
-    }
-    if (robotFront === -1) {
-        robotFront = 0;
-    }
-    robotRear++;
-    robotQueue[robotRear] = waypoint;
-}
-
-function dequeueRobot() {
-    if (isRobotQueueEmpty()) {
-        alert("Robot Queue is empty.");
-        return null;
-    }
-    let temp = robotQueue[robotFront];
-    robotFront++;
-    if (robotFront > robotRear) {
-        robotFront = -1;
-        robotRear = -1;
-    }
-    return temp;
-}
 
 // ==========================================
 // UI INTEGRATION LOGIC & RENDERERS
@@ -220,26 +181,10 @@ function renderStack() {
     container.innerHTML = html;
 }
 
-function renderRobot() {
-    const container = document.getElementById("robot-queue");
-    container.innerHTML = "";
-    if (isRobotQueueEmpty()) {
-        container.innerHTML = "<p>Robot route queue is empty.</p>";
-        return;
-    }
-    let html = "<ol>";
-    for (let i = robotFront; i <= robotRear; i++) {
-        html += `<li>Visit: ${robotQueue[i]}</li>`;
-    }
-    html += "</ol>";
-    container.innerHTML = html;
-}
-
 function renderAll() {
     renderInventory();
     renderQueue();
     renderStack();
-    renderRobot();
 }
 
 // UI Handlers
@@ -303,8 +248,6 @@ function uiProcessOrder() {
     // Push to history stack
     pushAction(o.orderId, o.partId, o.qtyRequested);
     
-    // Add to Robot Queue
-    addWaypoint("Shelf-" + o.partId);
     
     renderAll();
 }
@@ -323,10 +266,7 @@ function uiUndoOrder() {
     renderAll();
 }
 
-function uiDequeueRobot() {
-    dequeueRobot();
-    renderAll();
-}
+
 
 // Initialize rendering on load
 window.onload = function() {
